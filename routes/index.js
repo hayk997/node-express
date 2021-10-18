@@ -1,15 +1,24 @@
 var express = require('express');
+const {User} = require('../models');
+const {Op} = require("sequelize");
 var router = express.Router();
-const db = require('../models');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  db.User.findAll({
-    attributes:['id']
-  }).then(users=>{
-    let title =users.map(i=>i.id).join(',')
-    res.render('index', { title:title });
+  User.update({
+   firstName:'test'
+  },{
+    where:{
+      id:{
+        [Op.gte]:500
+      }
+    }
+  }).then(()=>{
+    res.render('index', { title: 'dsa' });
   })
+
+
 
 });
 
